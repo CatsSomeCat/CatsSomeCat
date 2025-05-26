@@ -24,43 +24,18 @@
 <!-- Philosophy Section -->
 <h2 align="center">My Coding Philosophy</h2>
 
-```rust
-struct ElysianCat {
-    nyanergy: &'static str,
-    mood: &'static str,
-    cuteness_level: u32,
-}
-
-impl ElysianCat {
-    fn new() -> Self {
-        ElysianCat {
-            nyanergy: "sparkly~coding magic :3",
-            mood: "heckin' comfy, UwU!",
-            cuteness_level: 999,
-        }
-    }
-
-    fn meow_meow_code(&self) {
-        println!("Nyaa~! I'm workin' on cutesy code just for you~! :3.");
-        println!(
-            "Mood: {} | Nyanergy: {} | Cuteness level: {} ☆彡.",
-            self.mood, self.nyanergy, self.cuteness_level
-        );
-        println!("Let's sprinkle some twinkly syntax sugar all over this code base, UwU.");
-    }
-
-    fn purr_sleep(&self) {
-        println!("Zzz... I'm takin' a lil' catnap after all that adorable codin', nya~! :3.");
-    }
-}
-
-fn main() {
-    let nyan_cat = ElysianCat::new();
-    nyan_cat.meow_meow_code(); nyan_cat.purr_sleep();
-}
-```
-
 ```python
+# Standard library imports
+import sys
+
+# Disable the creation of `__pycache__` directories by the Python interpreter
+# Normally, Python generates `.pyc` files in a `__pycache__` directory when a module is imported
+# These `.pyc` files contain the bytecode compiled from the Python source code, which helps speed up subsequent imports
+# By setting `sys.dont_write_bytecode` to `True`, this behavior is suppressed
+# This can be useful in scenarios where you want to avoid clutter, reduce disk writes, or ensure
+# that only source files are used (e.g., in environments with strict file management policies)
+sys.dont_write_bytecode = True
+
 from __future__ import annotations
 
 from typing import TypeVar, Generic, Dict, List, Any, Callable, Optional, Type, Self, Any
@@ -179,7 +154,7 @@ def analyze_project(project: BaseProject) -> None:
     print(f"Analyzing {project}")
 
 def main() -> None:
-    """Demonstrate the usage of the ElysianCat singleton."""
+    """Demonstrates the usage of the ElysianCat singleton."""
     
     # Get ElysianCat instances; note both references point to the same object
     developer_ = ElysianCat[PythonProject]()
@@ -246,8 +221,45 @@ def main() -> None:
     for key, value in developer_.philosophy.items():
         print(f"- {key}: {value}")
 
+# Ensure the script only runs when executed directly
 if __name__ == "__main__":
     main()
+```
+
+```rust
+struct ElysianCat {
+    nyanergy: &'static str,
+    mood: &'static str,
+    cuteness_level: u32,
+}
+
+impl ElysianCat {
+    fn new() -> Self {
+        ElysianCat {
+            nyanergy: "sparkly~coding magic :3",
+            mood: "heckin' comfy, UwU!",
+            cuteness_level: 999,
+        }
+    }
+
+    fn meow_meow_code(&self) {
+        println!("Nyaa~! I'm workin' on cutesy code just for you~! :3.");
+        println!(
+            "Mood: {} | Nyanergy: {} | Cuteness level: {} ☆彡.",
+            self.mood, self.nyanergy, self.cuteness_level
+        );
+        println!("Let's sprinkle some twinkly syntax sugar all over this code base, UwU.");
+    }
+
+    fn purr_sleep(&self) {
+        println!("Zzz... I'm takin' a lil' catnap after all that adorable codin', nya~! :3.");
+    }
+}
+
+fn main() {
+    let nyan_cat = ElysianCat::new();
+    nyan_cat.meow_meow_code(); nyan_cat.purr_sleep();
+}
 ```
 
 <!-- Skills Section -->
