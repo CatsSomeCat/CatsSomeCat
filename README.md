@@ -77,8 +77,8 @@ class ElysianCat(Generic[T_contra]):
         return cls._instance
     
     def __init_subclass__(cls: Type[Self], **kwargs: Any) -> NoReturn:
-        """Prevents inheritance from this class."""
-        raise TypeError("ElysianCat cannot be subclassed.")
+        """Prevents inheritance from this particular class."""
+        raise TypeError(f"{self.__class__.__name__} cannot be subclassed.")
     
     def __init__(self) -> None:
         # Only initialize if not already initialized
