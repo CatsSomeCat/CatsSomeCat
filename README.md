@@ -43,6 +43,8 @@ from typing import (
     Callable,
     Dict,
     Generic,
+    Union,
+    Tuple,
     List,
     Optional,
     Protocol,
@@ -63,10 +65,10 @@ class ElysianCat(Generic[T_contra]):
     Pay attention, this is a Singleton class and cannot be inherited from!
     """
     
-    __slots__ = ("languages", "values", "current_focus", "_optimization_level", "_current_project", "initialized")
+    __slots__: Tuple[str, ...] = ("languages", "values", "current_focus", "_optimization_level", "_current_project", "initialized")
     
     # Singleton instance
-    _instance = None
+    _instance: Union[Self, None] = None
     
     def __new__(cls: Type[Self], *args: Any, **kwargs: Any) -> Self:
         """Ensures only one instance of ElysianCat exists."""
@@ -173,7 +175,8 @@ class PythonProject:
 
     @property
     def language(self) -> str:
-        return "Python"
+        # Dynamically extract the language from the class name
+        return self.__class__.__name__.replace("Project", "")
 
     @property
     def version(self) -> str:
@@ -199,7 +202,8 @@ class RustProject:
 
     @property
     def language(self) -> str:
-        return "Rust"
+        # Dynamically extract the language from the class name
+        return self.__class__.__name__.replace("Project", "")
 
     @property
     def version(self) -> str:
