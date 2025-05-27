@@ -38,7 +38,19 @@ sys.dont_write_bytecode = True
 
 from __future__ import annotations
 
-from typing import TypeVar, Generic, Dict, List, Any, Callable, Optional, Type, Self, Any
+from typing import (
+    Any,
+    Callable,
+    Dict,
+    Generic,
+    List,
+    Optional,
+    Protocol,
+    Self,
+    Type,
+    TypeVar,
+    runtime_checkable,
+)
 
 # Contravariant type parameter
 T_contra = TypeVar('T_contra', contravariant=True)
@@ -51,7 +63,7 @@ class ElysianCat(Generic[T_contra]):
     Pay attention, this is a Singleton class and cannot be inherited from!
     """
     
-    __slots__ = ("languages", "values", "current_focus", "_optimization_level", "_current_project")
+    __slots__ = ("languages", "values", "current_focus", "_optimization_level", "_current_project", "initialized")
     
     # Singleton instance
     _instance = None
@@ -123,31 +135,78 @@ class ElysianCat(Generic[T_contra]):
             "goal": "Elegant solutions to complex problems."
         }
 
-# Define project classes
-class BaseProject:
-    def __init__(self, name: str):
-        self.name = name
-    
-    def __str__(self) -> str:
-        return f"Project: {self.name}"
+@runtime_checkable
+class Project(Protocol):
+    """
+    A protocol representing a project with name, language, and version.
+    """
 
-class PythonProject(BaseProject):
-    def __init__(self, name: str, version: str):
-        super().__init__(name)
-        self.language = "Python"
-        self.version = version
-        
-    def __str__(self) -> str:
-        return f"Python {self.version} Project: {self.name}"
+    @property
+    def name(self) -> str:
+        ...
 
-class RustProject(BaseProject):
-    def __init__(self, name: str, version: str):
-        super().__init__(name)
-        self.language = "Rust"
-        self.version = version
-        
+    @property
+    def language(self) -> str:
+        ...
+
+    @property
+    def version(self) -> str:
+        ...
+
     def __str__(self) -> str:
-        return f"Rust {self.version} Project: {self.name}"
+        ...
+
+class PythonProject:
+    """
+    Represents a Python project with a specific version.
+    """
+
+    __slots__ = ("_name", "_version")
+
+    def __init__(self, name: str, version: str) -> None:
+        self._name: str = name
+        self._version: str = version
+
+    @property
+    def name(self) -> str:
+        return self._name
+
+    @property
+    def language(self) -> str:
+        return "Python"
+
+    @property
+    def version(self) -> str:
+        return self._version
+
+    def __str__(self) -> str:
+        return f"{self.language} {self.version} Project: {self.name}"
+
+class RustProject:
+    """
+    Represents a Rust project with a specific version.
+    """
+
+    __slots__ = ("_name", "_version")
+
+    def __init__(self, name: str, version: str) -> None:
+        self._name: str = name
+        self._version: str = version
+
+    @property
+    def name(self) -> str:
+        return self._name
+
+    @property
+    def language(self) -> str:
+        return "Rust"
+
+    @property
+    def version(self) -> str:
+        return self._version
+
+    def __str__(self) -> str:
+        return f"{self.language} {self.version} Project: {self.name}"
 
 # Function that accepts BaseProject (demonstrates contravariance)
 def analyze_project(project: BaseProject) -> None:
